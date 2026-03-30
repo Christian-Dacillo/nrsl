@@ -1,0 +1,423 @@
+/* =============================================
+   ACTION BUTTONS
+   ============================================= */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: #d0d0d0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.btn {
+  padding: 8px 24px;
+  font-size: 13px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.btn-preview { background: #4a6fa5; color: white; }
+.btn-preview:hover { background: #3a5a8a; }
+.btn-print { background: #2e7d32; color: white; }
+.btn-print:hover { background: #1b5e20; }
+
+/* =============================================
+   PAGE WRAPPER
+   ============================================= */
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 40px;
+  background: #b0b0b0;
+  min-height: calc(100vh - 56px);
+  overflow-x: auto;
+}
+
+/* =============================================
+   DOCUMENT — A4 at 96dpi = 794×1123px
+   We use the full height, tight padding
+   ============================================= */
+.document {
+  width: 794px;
+  min-width: 794px;
+  height: 1123px;
+  background: white;
+  padding: 22px 32px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  color: #000;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.header-logo {
+  flex: 0 0 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-placeholder {
+  width: 86px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.logo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ntc-logo img  { mix-blend-mode: multiply; }
+.bagong-logo img { mix-blend-mode: multiply; }
+
+.logo-fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: bold;
+  color: #555;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.header-center {
+  flex: 1;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.header-center .republic  { font-size: 10px; }
+.header-center .agency    { font-size: 13px; font-weight: bold; }
+.header-center .office    { font-size: 12px; font-weight: bold; }
+.header-center .address,
+.header-center .contact,
+.header-center .email     { font-size: 9.5px; }
+
+.header-divider {
+  border-top: 1.5px solid #000;
+  margin: 5px 0 3px;
+}
+
+/* =============================================
+   DOCUMENT TITLE
+   ============================================= */
+.doc-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  margin: 5px 0 6px;
+  text-transform: uppercase;
+}
+
+/* =============================================
+   ISSUED ROW
+   ============================================= */
+.issued-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 11px;
+  margin-bottom: 3px;
+  padding-right: 4px;
+}
+
+.issued-label { font-weight: bold; }
+.issued-value { min-width: 130px; }
+
+/* =============================================
+   LICENSE NO ROW
+   ============================================= */
+.license-no-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.license-no-label {
+  font-size: 11px;
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.license-no-value {
+  font-size: 11px;
+  font-weight: bold;
+  flex: 1;
+  padding-top: 2px;
+}
+
+/* =============================================
+   FREQUENCIES BOX
+   ============================================= */
+.frequencies-box {
+  border: 1px solid #000;
+  padding: 3px 5px;
+  min-width: 220px;
+}
+
+.freq-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 10px;
+  border-bottom: 1px solid #000;
+  margin-bottom: 2px;
+  padding-bottom: 2px;
+}
+
+.freq-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5px;
+}
+
+.freq-table th,
+.freq-table td {
+  border: 1px solid #000;
+  padding: 2px 5px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.freq-table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+/* =============================================
+   INFO SECTION
+   ============================================= */
+.info-section {
+  margin-bottom: 8px;
+}
+
+.info-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 5px;
+  flex-wrap: nowrap;
+}
+
+.info-label {
+  font-size: 10.5px;
+  font-weight: bold;
+  white-space: nowrap;
+  min-width: 148px;
+}
+
+.info-value {
+  font-size: 11px;
+  flex: 1;
+}
+
+.info-value.underline {
+  border-bottom: 1px solid #000;
+  min-width: 80px;
+}
+
+.info-value.bold   { font-weight: bold; }
+.info-value.italic { font-style: italic; }
+
+.ml-20 { margin-left: 20px; }
+.ml-10 { margin-left: 10px; }
+
+/* =============================================
+   EQUIPMENT TABLE
+   ============================================= */
+.equipment-section {
+  margin-bottom: 8px;
+  flex: 1;
+}
+
+.equipment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5px;
+}
+
+.equipment-table th {
+  border: 1px solid #000;
+  padding: 6px 6px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 10.5px;
+  background: #fff;
+}
+
+.equipment-table td {
+  border: 1px solid #000;
+  padding: 0 6px;
+  text-align: center;
+  font-size: 10.5px;
+  height: 26px;
+}
+
+.equipment-table .empty-row td {
+  height: 26px;
+}
+
+.equipment-table th:nth-child(1),
+.equipment-table td:nth-child(1) { width: 22%; }
+.equipment-table th:nth-child(2),
+.equipment-table td:nth-child(2) { width: 18%; }
+.equipment-table th:nth-child(3),
+.equipment-table td:nth-child(3) { width: 14%; }
+.equipment-table th:nth-child(4),
+.equipment-table td:nth-child(4) { width: 26%; }
+.equipment-table th:nth-child(5),
+.equipment-table td:nth-child(5) { width: 20%; }
+
+/* =============================================
+   SIGNATURE AREA
+   ============================================= */
+.signature-area {
+  display: flex;
+  justify-content: flex-end;
+  margin: 6px 0 5px;
+  padding-right: 24px;
+}
+
+.signature-block {
+  text-align: center;
+  min-width: 220px;
+}
+
+.signature-line {
+  height: 46px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+.signature-img {
+  max-height: 44px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.signatory-name {
+  font-size: 11px;
+  font-weight: bold;
+  border-top: 1px solid #000;
+  padding-top: 2px;
+}
+
+.signatory-title {
+  font-size: 10px;
+  font-style: italic;
+}
+
+/* =============================================
+   NOTES SECTION
+   ============================================= */
+.notes-section {
+  margin-bottom: 6px;
+}
+
+.notes-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+  font-size: 9px;
+}
+
+.notes-table td {
+  border: 1px solid #000;
+  padding: 2.5px 5px;
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.note-num {
+  width: 18px;
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.note-text { font-size: 9px; }
+
+/* =============================================
+   DOCUMENT FOOTER
+   ============================================= */
+.doc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  margin-top: 5px;
+  padding: 2px 0;
+}
+
+.footer-center { text-align: center; flex: 1; }
+.footer-left, .footer-right { min-width: 60px; font-size: 10px; }
+
+.footer-address {
+  border-top: 1px solid #000;
+  margin-top: 5px;
+  padding-top: 4px;
+  text-align: center;
+  font-size: 9.5px;
+  line-height: 1.55;
+}
+
+/* =============================================
+   PRINT STYLES
+   ============================================= */
+@media print {
+  .no-print { display: none !important; }
+
+  .page-wrapper {
+    padding: 0;
+    background: white;
+    min-height: unset;
+  }
+
+  .document {
+    width: 210mm;
+    min-width: unset;
+    height: 297mm;
+    padding: 12mm 16mm 10mm;
+    box-shadow: none;
+    margin: 0;
+    font-size: 11px;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body { background: white; }
+}
