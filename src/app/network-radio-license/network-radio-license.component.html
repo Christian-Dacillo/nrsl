@@ -1,24 +1,28 @@
-<!-- Action Buttons (hidden on print) -->
-<div class="action-buttons no-print">
-  <button class="btn btn-preview" (click)="togglePreview()">
-    {{ previewMode ? 'Exit Preview' : 'Preview' }}
-  </button>
-  <button class="btn btn-print" (click)="printDocument()">Print</button>
+<!-- EDIT MODE TOOLBAR -->
+<div class="action-buttons no-print" *ngIf="!previewMode">
+  <button class="btn btn-preview" (click)="enterPreview()">Preview</button>
+  <button class="btn btn-print" (click)="printFull()">Print</button>
+</div>
+
+<!-- PREVIEW MODE TOOLBAR -->
+<div class="action-buttons no-print" *ngIf="previewMode">
+  <button class="btn btn-back" (click)="backToEdit()">&#8592; Back to Edit</button>
+  <button class="btn btn-print" (click)="printFull()">Print Form</button>
+  <button class="btn btn-data-only" (click)="printDataOnly()">Print Data </button>
 </div>
 
 <!-- Document Wrapper -->
-<div class="page-wrapper" [class.preview-mode]="previewMode">
-  <div class="document" id="license-document">
+<div class="page-wrapper" [class.data-only-mode]="dataOnlyMode">
+  <div class="document" id="license-document" [class.data-only-mode]="dataOnlyMode">
 
     <!-- HEADER -->
-    <div class="header">
+    <div class="header hide-data-only">
       <div class="header-logo left-logo">
         <div class="logo-placeholder ntc-logo">
           <img src="assets/ntc-seal.png.png" alt="NTC Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
           <div class="logo-fallback">NTC</div>
         </div>
       </div>
-
       <div class="header-center">
         <p class="republic">REPUBLIC OF THE PHILIPPINES</p>
         <p class="agency"><strong>NATIONAL TELECOMMUNICATIONS COMMISSION</strong></p>
@@ -27,7 +31,6 @@
         <p class="contact">Contact No.: 0917-8507-751 (Globe) &amp; 0919-0771-302 (Smart)</p>
         <p class="email">Email: <em>ntcr5&#64;ntc.gov.ph / ntcv_legazpi&#64;yahoo.com</em> Website: <em>http://ntc5.ntc.gov.ph</em></p>
       </div>
-
       <div class="header-logo right-logo">
         <div class="logo-placeholder bagong-logo">
           <img src="assets/bagong-seal.png" alt="Bagong Pilipinas" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
@@ -39,37 +42,52 @@
     
 
     <!-- DOCUMENT TITLE -->
-    <div class="doc-title">
+    <div class="doc-title hide-data-only">
       <strong>NETWORK RADIO STATION LICENSE</strong>
     </div>
 
     <!-- ISSUED DATE ROW -->
     <div class="issued-row">
-      <div class="issued-label">ISSUED:</div>
-      <div class="issued-value">{{ licenseData.issuedDate }}</div>
+      <div class="issued-label hide-data-only">ISSUED:</div>
+      <div class="issued-value"
+           [class.editable]="!previewMode"
+           [contentEditable]="!previewMode"
+           [textContent]="licenseData.issuedDate"
+           (blur)="save($event, licenseData, 'issuedDate')"
+           (keydown.enter)="blurOnEnter($event)"></div>
     </div>
 
     <!-- LICENSE NO ROW -->
     <div class="license-no-row">
-      <span class="license-no-label">License No:</span>
-      <span class="license-no-value">{{ licenseData.licenseNo }}</span>
+      <span class="license-no-label hide-data-only">License No:</span>
+      <span class="license-no-value"
+            [class.editable]="!previewMode"
+            [contentEditable]="!previewMode"
+            [textContent]="licenseData.licenseNo"
+            (blur)="save($event, licenseData, 'licenseNo')"
+            (keydown.enter)="blurOnEnter($event)"></span>
 
       <!-- Frequencies Box -->
       <div class="frequencies-box">
-        <div class="freq-title">Frequencies</div>
+        <div class="freq-title hide-data-only">Frequencies</div>
         <table class="freq-table">
           <thead>
-            <tr>
-              <th>CH</th>
-              <th>TX</th>
-              <th>RX</th>
-            </tr>
+            <tr class="hide-data-only"><th>CH</th><th>TX</th><th>RX</th></tr>
           </thead>
           <tbody>
             <tr *ngFor="let freq of licenseData.frequencies">
-              <td>{{ freq.ch }}</td>
-              <td>{{ freq.tx }}</td>
-              <td>{{ freq.rx }}</td>
+              <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                  [textContent]="freq.ch"
+                  (blur)="save($event, freq, 'ch')"
+                  (keydown.enter)="blurOnEnter($event)"></td>
+              <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                  [textContent]="freq.tx"
+                  (blur)="save($event, freq, 'tx')"
+                  (keydown.enter)="blurOnEnter($event)"></td>
+              <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                  [textContent]="freq.rx"
+                  (blur)="save($event, freq, 'rx')"
+                  (keydown.enter)="blurOnEnter($event)"></td>
             </tr>
           </tbody>
         </table>
@@ -79,34 +97,79 @@
     <!-- LICENSEE INFO FIELDS -->
     <div class="info-section">
       <div class="info-row">
-        <span class="info-label">LICENSEE:</span>
-        <span class="info-value underline bold">{{ licenseData.licensee }}</span>
+        <span class="info-label hide-data-only">LICENSEE:</span>
+        <span class="info-value underline bold"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.licensee"
+              (blur)="save($event, licenseData, 'licensee')"
+              (keydown.enter)="blurOnEnter($event)"></span>
       </div>
       <div class="info-row">
-        <span class="info-label">POSTAL ADDRESS:</span>
-        <span class="info-value underline">{{ licenseData.postalAddress }}</span>
+        <span class="info-label hide-data-only">POSTAL ADDRESS:</span>
+        <span class="info-value underline"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.postalAddress"
+              (blur)="save($event, licenseData, 'postalAddress')"
+              (keydown.enter)="blurOnEnter($event)"></span>
       </div>
       <div class="info-row">
-        <span class="info-label">FREQUENCY RANGE:</span>
-        <span class="info-value">{{ licenseData.frequencyRange }}</span>
-        <span class="info-label ml-20">BANDWITH &amp; EMISSION:</span>
-        <span class="info-value underline bold">{{ licenseData.bandwidthEmission }}</span>
+        <span class="info-label hide-data-only">FREQUENCY RANGE:</span>
+        <span class="info-value underline"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.frequencyRange"
+              (blur)="save($event, licenseData, 'frequencyRange')"
+              (keydown.enter)="blurOnEnter($event)"></span>
+        <span class="info-label ml-20 hide-data-only">BANDWITH &amp; EMISSION:</span>
+        <span class="info-value underline bold"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.bandwidthEmission"
+              (blur)="save($event, licenseData, 'bandwidthEmission')"
+              (keydown.enter)="blurOnEnter($event)"></span>
       </div>
       <div class="info-row">
-        <span class="info-label">HOURS OF OPERATION:</span>
-        <span class="info-value underline bold">{{ licenseData.hoursOfOperation }}</span>
-        <span class="info-label ml-20">NATURE OF SERVICE:</span>
-        <span class="info-value underline bold">{{ licenseData.natureOfService }}</span>
+        <span class="info-label hide-data-only">HOURS OF OPERATION:</span>
+        <span class="info-value underline bold"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.hoursOfOperation"
+              (blur)="save($event, licenseData, 'hoursOfOperation')"
+              (keydown.enter)="blurOnEnter($event)"></span>
+        <span class="info-label ml-20 hide-data-only">NATURE OF SERVICE:</span>
+        <span class="info-value underline bold"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.natureOfService"
+              (blur)="save($event, licenseData, 'natureOfService')"
+              (keydown.enter)="blurOnEnter($event)"></span>
       </div>
       <div class="info-row">
-        <span class="info-label">EFFECTIVITY:</span>
-        <span class="info-value underline bold">{{ licenseData.effectivityFrom }}</span>
-        <span class="info-label ml-10">TO</span>
-        <span class="info-value underline bold">{{ licenseData.effectivityTo }}</span>
+        <span class="info-label hide-data-only">EFFECTIVITY:</span>
+        <span class="info-value underline bold"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.effectivityFrom"
+              (blur)="save($event, licenseData, 'effectivityFrom')"
+              (keydown.enter)="blurOnEnter($event)"></span>
+        <span class="info-label ml-10 hide-data-only">TO</span>
+        <span class="info-value underline bold"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.effectivityTo"
+              (blur)="save($event, licenseData, 'effectivityTo')"
+              (keydown.enter)="blurOnEnter($event)"></span>
       </div>
       <div class="info-row">
-        <span class="info-label">POINT OF SERVICE:</span>
-        <span class="info-value underline italic">{{ licenseData.pointOfService }}</span>
+        <span class="info-label hide-data-only">POINT OF SERVICE:</span>
+        <span class="info-value underline italic"
+              [class.editable]="!previewMode"
+              [contentEditable]="!previewMode"
+              [textContent]="licenseData.pointOfService"
+              (blur)="save($event, licenseData, 'pointOfService')"
+              (keydown.enter)="blurOnEnter($event)"></span>
       </div>
     </div>
 
@@ -114,7 +177,7 @@
     <div class="equipment-section">
       <table class="equipment-table">
         <thead>
-          <tr>
+          <tr class="hide-data-only">
             <th>LOCATION</th>
             <th>CALL-SIGN</th>
             <th>POWER(kW)</th>
@@ -124,13 +187,27 @@
         </thead>
         <tbody>
           <tr *ngFor="let eq of licenseData.equipment">
-            <td>{{ eq.location }}</td>
-            <td>{{ eq.callSign }}</td>
-            <td>{{ eq.power }}</td>
-            <td>{{ eq.equipment }}</td>
-            <td>{{ eq.serialNo }}</td>
+            <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                [textContent]="eq.location"
+                (blur)="save($event, eq, 'location')"
+                (keydown.enter)="blurOnEnter($event)"></td>
+            <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                [textContent]="eq.callSign"
+                (blur)="save($event, eq, 'callSign')"
+                (keydown.enter)="blurOnEnter($event)"></td>
+            <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                [textContent]="eq.power"
+                (blur)="save($event, eq, 'power')"
+                (keydown.enter)="blurOnEnter($event)"></td>
+            <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                [textContent]="eq.equipment"
+                (blur)="save($event, eq, 'equipment')"
+                (keydown.enter)="blurOnEnter($event)"></td>
+            <td [class.editable]="!previewMode" [contentEditable]="!previewMode"
+                [textContent]="eq.serialNo"
+                (blur)="save($event, eq, 'serialNo')"
+                (keydown.enter)="blurOnEnter($event)"></td>
           </tr>
-          <!-- Empty rows to fill space -->
           <tr *ngFor="let r of emptyRows" class="empty-row">
             <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
           </tr>
@@ -141,12 +218,22 @@
     <!-- SIGNATURE AREA -->
     <div class="signature-area">
       <div class="signature-block">
-        <div class="signature-line">
+        <div class="signature-line hide-data-only">
           <img src="assets/signature.png" alt="Signature" class="signature-img"
                onerror="this.style.display='none'">
         </div>
-        <div class="signatory-name">{{ licenseData.signatoryName }}</div>
-        <div class="signatory-title">{{ licenseData.signatoryTitle }}</div>
+        <div class="signatory-name"
+             [class.editable]="!previewMode"
+             [contentEditable]="!previewMode"
+             [textContent]="licenseData.signatoryName"
+             (blur)="save($event, licenseData, 'signatoryName')"
+             (keydown.enter)="blurOnEnter($event)"></div>
+        <div class="signatory-title"
+             [class.editable]="!previewMode"
+             [contentEditable]="!previewMode"
+             [textContent]="licenseData.signatoryTitle"
+             (blur)="save($event, licenseData, 'signatoryTitle')"
+             (keydown.enter)="blurOnEnter($event)"></div>
       </div>
     </div>
 
@@ -155,25 +242,30 @@
       <table class="notes-table">
         <tbody>
           <tr *ngFor="let note of licenseData.notes; let i = index">
-            <td class="note-num">{{ i + 1 }}</td>
-            <td class="note-text">{{ note }}</td>
+            <td class="note-num hide-data-only">{{ i + 1 }}</td>
+            <td class="note-text"
+                [class.editable]="!previewMode"
+                [contentEditable]="!previewMode"
+                [textContent]="note"
+                (blur)="saveNote($event, i)"
+                (keydown.enter)="blurOnEnter($event)"></td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <!-- FOOTER -->
-    <div class="doc-footer">
+    <div class="doc-footer hide-data-only">
       <div class="footer-left">EO</div>
       <div class="footer-center">Page 1 of 1</div>
       <div class="footer-right"></div>
     </div>
 
-    <div class="footer-address">
+    <div class="footer-address hide-data-only">
       <p>National Telecommunications Commission</p>
       <p>Central Office: NTC Building, BIR Road, East Triangle, Diliman, Quezon City</p>
       <p>Email: <em>ntc&#64;ntc.gov.ph</em> Website: <em>https://www.ntc.gov.ph</em></p>
     </div>
 
-  </div><!-- end .document -->
-</div><!-- end .page-wrapper -->
+  </div>
+</div>

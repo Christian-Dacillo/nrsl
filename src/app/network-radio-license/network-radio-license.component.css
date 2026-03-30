@@ -1,11 +1,9 @@
-/* =============================================
-   ACTION BUTTONS
-   ============================================= */
+
 .action-buttons {
   display: flex;
   justify-content: center;
   gap: 12px;
-  padding: 16px;
+  padding: 12px;
   background: #d0d0d0;
   position: sticky;
   top: 0;
@@ -14,71 +12,67 @@
 }
 
 .btn {
-  padding: 8px 24px;
-  font-size: 13px;
+  padding: 7px 22px;
+  font-size: 12px;
   font-weight: bold;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  letter-spacing: 0.5px;
 }
 
 .btn-preview { background: #4a6fa5; color: white; }
 .btn-preview:hover { background: #3a5a8a; }
 .btn-print { background: #2e7d32; color: white; }
 .btn-print:hover { background: #1b5e20; }
+.btn-back { background: #555; color: white; }
+.btn-back:hover { background: #333; }
+.btn-data-only { background: #7b1fa2; color: white; }
+.btn-data-only:hover { background: #4a0072; }
 
-/* =============================================
-   PAGE WRAPPER
-   ============================================= */
+
 .page-wrapper {
   display: flex;
   justify-content: center;
-  padding: 24px 16px 40px;
-  background: #b0b0b0;
-  min-height: calc(100vh - 56px);
+  padding: 20px 16px 32px;
+  background: #909090;
+  min-height: calc(100vh - 48px);
   overflow-x: auto;
 }
 
-/* =============================================
-   DOCUMENT — A4 at 96dpi = 794×1123px
-   We use the full height, tight padding
-   ============================================= */
+
 .document {
   width: 794px;
   min-width: 794px;
   height: 1123px;
   background: white;
-  padding: 22px 32px 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  padding: 24px 34px 18px 34px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   font-family: Arial, sans-serif;
-  font-size: 11px;
+  font-size: 9.5px;
   color: #000;
-  position: relative;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
-/* =============================================
-   HEADER
-   ============================================= */
+
 .header {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 4px;
+  flex-shrink: 0;
 }
 
 .header-logo {
-  flex: 0 0 90px;
+  flex: 0 0 82px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .logo-placeholder {
-  width: 86px;
-  height: 86px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,19 +86,17 @@
   object-fit: contain;
 }
 
-.ntc-logo img  { mix-blend-mode: multiply; }
+.ntc-logo img    { mix-blend-mode: multiply; }
 .bagong-logo img { mix-blend-mode: multiply; }
 
 .logo-fallback {
   display: none;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: bold;
   color: #555;
   text-align: center;
-  width: 100%;
-  height: 100%;
 }
 
 .header-center {
@@ -113,91 +105,89 @@
   line-height: 1.5;
 }
 
-.header-center .republic  { font-size: 10px; }
-.header-center .agency    { font-size: 13px; font-weight: bold; }
-.header-center .office    { font-size: 12px; font-weight: bold; }
+.header-center .republic { font-size: 9px; }
+.header-center .agency   { font-size: 12px; font-weight: bold; }
+.header-center .office   { font-size: 11px; font-weight: bold; }
 .header-center .address,
 .header-center .contact,
-.header-center .email     { font-size: 9.5px; }
+.header-center .email    { font-size: 8.5px; }
+
 
 .header-divider {
+  border: none;
   border-top: 1.5px solid #000;
-  margin: 5px 0 3px;
+  margin: 5px 0 4px;
+  flex-shrink: 0;
 }
 
-/* =============================================
-   DOCUMENT TITLE
-   ============================================= */
+
 .doc-title {
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
-  letter-spacing: 0.8px;
-  margin: 5px 0 6px;
+  letter-spacing: 1px;
+  margin: 4px 0 5px;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 
-/* =============================================
-   ISSUED ROW
-   ============================================= */
+
 .issued-row {
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
   gap: 6px;
-  font-size: 11px;
+  font-size: 9.5px;
   margin-bottom: 3px;
-  padding-right: 4px;
+  flex-shrink: 0;
 }
 
 .issued-label { font-weight: bold; }
-.issued-value { min-width: 130px; }
+.issued-value { min-width: 120px; }
 
-/* =============================================
-   LICENSE NO ROW
-   ============================================= */
+
 .license-no-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  margin-left: 150px;
+  flex-shrink: 0;
 }
 
 .license-no-label {
-  font-size: 11px;
+  font-size: 9.5px;
   white-space: nowrap;
   padding-top: 2px;
 }
 
 .license-no-value {
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: bold;
   flex: 1;
   padding-top: 2px;
 }
 
-/* =============================================
-   FREQUENCIES BOX
-   ============================================= */
+
 .frequencies-box {
   border: 1px solid #000;
-  padding: 3px 5px;
-  min-width: 220px;
+  padding: 2px 5px;
+  min-width: 215px;
 }
 
 .freq-title {
   text-align: center;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 9px;
   border-bottom: 1px solid #000;
   margin-bottom: 2px;
-  padding-bottom: 2px;
+  padding-bottom: 1px;
 }
 
 .freq-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 9.5px;
+  font-size: 8.5px;
 }
 
 .freq-table th,
@@ -208,35 +198,31 @@
   white-space: nowrap;
 }
 
-.freq-table th {
-  background: #f0f0f0;
-  font-weight: bold;
-}
+.freq-table th { background: #f0f0f0; font-weight: bold; }
 
-/* =============================================
-   INFO SECTION
-   ============================================= */
+
 .info-section {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
 }
 
 .info-row {
   display: flex;
   align-items: baseline;
   gap: 4px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   flex-wrap: nowrap;
 }
 
 .info-label {
-  font-size: 10.5px;
+  font-size: 9px;
   font-weight: bold;
   white-space: nowrap;
-  min-width: 148px;
+  min-width: 140px;
 }
 
 .info-value {
-  font-size: 11px;
+  font-size: 9.5px;
   flex: 1;
 }
 
@@ -248,43 +234,43 @@
 .info-value.bold   { font-weight: bold; }
 .info-value.italic { font-style: italic; }
 
-.ml-20 { margin-left: 20px; }
+.ml-20 { margin-left: 18px; }
 .ml-10 { margin-left: 10px; }
 
-/* =============================================
-   EQUIPMENT TABLE
-   ============================================= */
+
 .equipment-section {
-  margin-bottom: 8px;
-  flex: 1;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+  min-height: 0;
 }
 
 .equipment-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 10.5px;
+  font-size: 9px;
+  table-layout: fixed;
+  height: 100%;
 }
 
 .equipment-table th {
   border: 1px solid #000;
-  padding: 6px 6px;
+  padding: 5px 4px;
   text-align: center;
   font-weight: bold;
-  font-size: 10.5px;
-  background: #fff;
+  font-size: 9px;
 }
 
 .equipment-table td {
   border: 1px solid #000;
-  padding: 0 6px;
+  padding: 0 4px;
   text-align: center;
-  font-size: 10.5px;
+  font-size: 9px;
   height: 26px;
 }
 
-.equipment-table .empty-row td {
-  height: 26px;
-}
+.equipment-table .empty-row td { height: 26px; }
 
 .equipment-table th:nth-child(1),
 .equipment-table td:nth-child(1) { width: 22%; }
@@ -297,23 +283,19 @@
 .equipment-table th:nth-child(5),
 .equipment-table td:nth-child(5) { width: 20%; }
 
-/* =============================================
-   SIGNATURE AREA
-   ============================================= */
+
 .signature-area {
   display: flex;
   justify-content: flex-end;
-  margin: 6px 0 5px;
-  padding-right: 24px;
+  margin: 5px 0 4px;
+  padding-right: 22px;
+  flex-shrink: 0;
 }
 
-.signature-block {
-  text-align: center;
-  min-width: 220px;
-}
+.signature-block { text-align: center; min-width: 210px; }
 
 .signature-line {
-  height: 46px;
+  height: 42px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -321,103 +303,141 @@
 }
 
 .signature-img {
-  max-height: 44px;
-  max-width: 180px;
+  max-height: 40px;
+  max-width: 170px;
   object-fit: contain;
 }
 
 .signatory-name {
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: bold;
-  border-top: 1px solid #000;
-  padding-top: 2px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 2px;
+  margin-bottom: 2px;
 }
 
-.signatory-title {
-  font-size: 10px;
-  font-style: italic;
-}
+.signatory-title { font-size: 9px; font-style: italic; }
 
-/* =============================================
-   NOTES SECTION
-   ============================================= */
+
 .notes-section {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+  flex-shrink: 0;
 }
 
 .notes-table {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #000;
-  font-size: 9px;
+  font-size: 7.8px;
 }
 
 .notes-table td {
   border: 1px solid #000;
-  padding: 2.5px 5px;
+  padding: 2px 4px;
   vertical-align: top;
-  line-height: 1.45;
+  line-height: 1.38;
 }
 
 .note-num {
-  width: 18px;
+  width: 16px;
   text-align: center;
   font-weight: bold;
   white-space: nowrap;
 }
 
-.note-text { font-size: 9px; }
+.note-text { font-size: 7.8px; }
 
-/* =============================================
-   DOCUMENT FOOTER
-   ============================================= */
+
 .doc-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 10px;
+  font-size: 9px;
   margin-top: 5px;
-  padding: 2px 0;
+  flex-shrink: 0;
 }
 
 .footer-center { text-align: center; flex: 1; }
-.footer-left, .footer-right { min-width: 60px; font-size: 10px; }
+.footer-left, .footer-right { min-width: 50px; }
 
 .footer-address {
   border-top: 1px solid #000;
-  margin-top: 5px;
+  margin-top: 4px;
   padding-top: 4px;
   text-align: center;
-  font-size: 9.5px;
+  font-size: 8.5px;
   line-height: 1.55;
+  flex-shrink: 0;
 }
 
-/* =============================================
-   PRINT STYLES
-   ============================================= */
+
+.editable {
+  outline: none;
+  cursor: text;
+  min-width: 10px;
+}
+
+.editable:focus {
+  outline: 1.5px dashed #1565c0;
+  background: #e3f2fd;
+  border-radius: 2px;
+}
+
+
 @media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   .no-print { display: none !important; }
+  .editable:focus { outline: none !important; background: transparent !important; }
+
+  
+  .data-only-mode .hide-data-only { visibility: hidden !important; }
+  .data-only-mode .equipment-table th,
+  .data-only-mode .equipment-table td,
+  .data-only-mode .freq-table th,
+  .data-only-mode .freq-table td,
+  .data-only-mode .notes-table td,
+  .data-only-mode .frequencies-box { border-color: transparent !important; }
+  .data-only-mode .info-value.underline { border-bottom-color: transparent !important; }
+  .data-only-mode .signatory-name { border-bottom-color: transparent !important; }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm;
+    height: 297mm;
+    background: white !important;
+  }
 
   .page-wrapper {
+    display: block;
     padding: 0;
+    margin: 0;
     background: white;
-    min-height: unset;
+    width: 210mm;
+    height: 297mm;
   }
 
   .document {
-    width: 210mm;
-    min-width: unset;
-    height: 297mm;
-    padding: 12mm 16mm 10mm;
-    box-shadow: none;
-    margin: 0;
-    font-size: 11px;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-width: unset !important;
+    padding: 12mm 16mm 10mm 16mm !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    font-size: 9.5px !important;
+    page-break-after: avoid;
+    page-break-before: avoid;
+    page-break-inside: avoid;
   }
 
   @page {
-    size: A4 portrait;
+    size: 210mm 297mm;
     margin: 0;
   }
-
-  body { background: white; }
 }
+
+

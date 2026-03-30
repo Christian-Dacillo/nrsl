@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,10 +6,12 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './network-radio-license.component.html',
-  styleUrls: ['./network-radio-license.component.css']
+  styleUrls: ['./network-radio-license.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NetworkRadioLicenseComponent {
   previewMode = false;
+  dataOnlyMode = false;
 
   licenseData = {
     issuedDate: 'TEST',
@@ -22,18 +24,18 @@ export class NetworkRadioLicenseComponent {
     natureOfService: 'TEST',
     effectivityFrom: 'TEST',
     effectivityTo: 'TEST',
-    pointOfService: 'TEST',
+    pointOfService: 'To communicate to all duly authorized radio stations of the licensee within TEST',
     frequencies: [
-      { ch: 'OH1:', tx: '169.0625 MHz', rx: '169.0625 MHz' }
+      { ch: 'TEST:', tx: 'TEST MHz', rx: 'TEST MHz' },
     ],
     equipment: [
-      { location: 'Portable', callSign: 'DXH-8063', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213685' },
-      { location: 'Portable', callSign: 'DXH-8062', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213559' },
-      { location: 'Portable', callSign: 'DXH-8061', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213385' },
-      { location: 'Portable', callSign: 'DXH-8060', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213452' },
-      { location: 'Portable', callSign: 'DXH-8059', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213741' },
-      { location: 'Portable', callSign: 'DXH-8058', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213642' },
-      { location: 'Portable', callSign: 'DXH-8057', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213386' }
+      { location: 'TEST', callSign: 'TEST', power: 'TEST', equipment: 'TEST', serialNo: 'TEST' },
+      { location: 'TEST', callSign: 'TEST', power: 'TEST', equipment: 'TEST', serialNo: 'TEST' },
+      { location: 'TEST', callSign: 'TEST', power: 'TEST', equipment: 'TEST', serialNo: 'TEST' },
+      { location: 'TEST', callSign: 'TEST', power: 'TEST', equipment: 'TEST', serialNo: 'TEST' },
+      { location: 'TEST', callSign: 'TEST', power: 'TEST', equipment: 'TEST', serialNo: 'TEST' },
+      { location: 'TEST', callSign: 'TEST', power: 'TEST', equipment: 'TEST', serialNo: 'TEST' },
+      { location: 'TEST', callSign: 'TEST', power: 'TEST', equipment: 'TEST', serialNo: 'TEST' },
     ],
     signatoryName: 'ATTY. JUDY SANN N. BILANGEL',
     signatoryTitle: 'OIC-Regional Director, RV',
@@ -51,15 +53,44 @@ export class NetworkRadioLicenseComponent {
 
   get emptyRows(): number[] {
     const filled = this.licenseData.equipment.length;
-    const min = 14;
+    const min = 7;
     return filled < min ? Array(min - filled).fill(0) : [];
   }
 
-  togglePreview(): void {
-    this.previewMode = !this.previewMode;
+  enterPreview(): void {
+    this.previewMode = true;
+    this.dataOnlyMode = false;
   }
 
-  printDocument(): void {
-    window.print();
+  backToEdit(): void {
+    this.previewMode = false;
+    this.dataOnlyMode = false;
+  }
+
+  printFull(): void {
+    this.dataOnlyMode = false;
+    setTimeout(() => window.print(), 50);
+  }
+
+  printDataOnly(): void {
+    this.dataOnlyMode = true;
+    setTimeout(() => {
+      window.print();
+      // restore after print dialog closes
+      setTimeout(() => { this.dataOnlyMode = false; }, 500);
+    }, 50);
+  }
+
+  save(event: Event, obj: any, field: string): void {
+    obj[field] = (event.target as HTMLElement).innerText.trim();
+  }
+
+  saveNote(event: Event, index: number): void {
+    this.licenseData.notes[index] = (event.target as HTMLElement).innerText.trim();
+  }
+
+  blurOnEnter(event: Event): void {
+    (event as KeyboardEvent).preventDefault();
+    (event.target as HTMLElement).blur();
   }
 }
