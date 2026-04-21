@@ -1,41 +1,43 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-network-radio-license',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './network-radio-license.component.html',
   styleUrls: ['./network-radio-license.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NetworkRadioLicenseComponent {
-  previewMode = false;
+  // 'form' = edit form, 'document' = document view, 'preview' = preview mode
+  viewMode: 'form' | 'document' | 'preview' = 'form';
   dataOnlyMode = false;
 
   licenseData = {
-    issuedDate: 'MARCH 23, 2026',
+    issuedDate: 'March 23, 2026',
     licenseNo: 'NRSL-EE-0561-2026 (NEW)',
     licensee: 'MALIDONG HIGH SCHOOL',
-    postalAddress: 'Z-3 Brgy, Malidong, Pio Duran, Albay',
+    postalAddress: 'Z-3 Brgy. Malidong, Pio Duran, Albay',
     frequencyRange: '136-174 MHz',
     bandwidthEmission: '16KOF3E',
-    hoursOfOperation: '1(HJ)',
+    hoursOfOperation: 'I(HJ)',
     natureOfService: 'CO',
-    effectivityFrom: 'MARCH 23, 2026',
-    effectivityTo: 'MARCH 22, 2027',
-    pointOfService: 'To communicate to all duly authorized radio stations of the licensee within TEST',
+    effectivityFrom: 'March 23, 2026',
+    effectivityTo: 'March 22, 2027',
+    pointOfService: 'To communicate to all duly authorized radio stations of the licensee within Pio Duran, Albay.',
     frequencies: [
-      { ch: 'CH1::', tx: '169.0625 MHz', rx: '169.0625 MHz' },
+      { ch: 'OH1:', tx: '169.0625 MHz', rx: '169.0625 MHz' }
     ],
     equipment: [
-      { location: 'Portable', callSign: 'DXH-8063', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PH8213685' },
-      { location: 'Portable', callSign: 'DXH-8062', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PH8213559' },
-      { location: 'Portable', callSign: 'DXH-8061', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PH8213385' },
-      { location: 'Portable', callSign: 'DXH-8060', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PH8213452' },
-      { location: 'Portable', callSign: 'DXH-8059', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PH8213741' },
-      { location: 'Portable', callSign: 'DXH-8058', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PH8213642' },
-      { location: 'Portable', callSign: 'DXH-8057', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PH8213386' },
+      { location: 'Portable', callSign: 'DXH-8063', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213685' },
+      { location: 'Portable', callSign: 'DXH-8062', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213559' },
+      { location: 'Portable', callSign: 'DXH-8061', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213385' },
+      { location: 'Portable', callSign: 'DXH-8060', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213452' },
+      { location: 'Portable', callSign: 'DXH-8059', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213741' },
+      { location: 'Portable', callSign: 'DXH-8058', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213642' },
+      { location: 'Portable', callSign: 'DXH-8057', power: '0.005', equipment: 'BAOFENG UV-82', serialNo: 'PHB213386' }
     ],
     signatoryName: 'ATTY. JUDY SANN N. BILANGEL',
     signatoryTitle: 'OIC-Regional Director, RV',
@@ -51,20 +53,35 @@ export class NetworkRadioLicenseComponent {
     ]
   };
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   get emptyRows(): number[] {
     const filled = this.licenseData.equipment.length;
     const min = 7;
     return filled < min ? Array(min - filled).fill(0) : [];
   }
 
-  enterPreview(): void {
-    this.previewMode = true;
-    this.dataOnlyMode = false;
+  submitForm(): void {
+    this.viewMode = 'document';
+    this.cdr.markForCheck();
   }
 
-  backToEdit(): void {
-    this.previewMode = false;
+  backToForm(): void {
+    this.viewMode = 'form';
     this.dataOnlyMode = false;
+    this.cdr.markForCheck();
+  }
+
+  enterPreview(): void {
+    this.viewMode = 'preview';
+    this.dataOnlyMode = false;
+    this.cdr.markForCheck();
+  }
+
+  backToDocument(): void {
+    this.viewMode = 'document';
+    this.dataOnlyMode = false;
+    this.cdr.markForCheck();
   }
 
   printFull(): void {
@@ -74,23 +91,23 @@ export class NetworkRadioLicenseComponent {
 
   printDataOnly(): void {
     this.dataOnlyMode = true;
+    this.cdr.markForCheck();
     setTimeout(() => {
       window.print();
-      // restore after print dialog closes
-      setTimeout(() => { this.dataOnlyMode = false; }, 500);
+      setTimeout(() => {
+        this.dataOnlyMode = false;
+        this.cdr.markForCheck();
+      }, 500);
     }, 50);
   }
 
-  save(event: Event, obj: any, field: string): void {
-    obj[field] = (event.target as HTMLElement).innerText.trim();
+  addEquipmentRow(): void {
+    this.licenseData.equipment.push({ location: '', callSign: '', power: '', equipment: '', serialNo: '' });
+    this.cdr.markForCheck();
   }
 
-  saveNote(event: Event, index: number): void {
-    this.licenseData.notes[index] = (event.target as HTMLElement).innerText.trim();
-  }
-
-  blurOnEnter(event: Event): void {
-    (event as KeyboardEvent).preventDefault();
-    (event.target as HTMLElement).blur();
+  removeEquipmentRow(index: number): void {
+    this.licenseData.equipment.splice(index, 1);
+    this.cdr.markForCheck();
   }
 }
